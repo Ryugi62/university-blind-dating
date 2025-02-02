@@ -2,34 +2,21 @@ import { DataTypes } from "sequelize";
 
 export default (sequelize) => {
   return sequelize.define(
-    "ChatMessage",
+    "ChatRoom",
     {
       id: {
         type: DataTypes.INTEGER,
         autoIncrement: true,
         primaryKey: true,
       },
-      roomId: {
+      noticeId: {
         type: DataTypes.INTEGER,
         allowNull: false,
         references: {
-          model: "chat_rooms",
+          model: "notices",
           key: "id",
         },
         onDelete: "CASCADE",
-      },
-      senderId: {
-        type: DataTypes.INTEGER,
-        allowNull: false,
-        references: {
-          model: "users",
-          key: "id",
-        },
-        onDelete: "CASCADE",
-      },
-      message: {
-        type: DataTypes.TEXT,
-        allowNull: false,
       },
       createdAt: {
         type: DataTypes.DATE,
@@ -38,8 +25,8 @@ export default (sequelize) => {
       },
     },
     {
-      tableName: "chat_messages",
-      timestamps: true,
+      tableName: "chat_rooms",
+      timestamps: true, // createdAt, updatedAt 자동 생성
     }
   );
 };
