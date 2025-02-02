@@ -19,9 +19,6 @@ const initModels = async () => {
     User.hasMany(Notice, { foreignKey: "creatorId" });
     Notice.belongsTo(User, { foreignKey: "creatorId" });
 
-    Notice.hasOne(ChatRoom, { foreignKey: "noticeId" });
-    ChatRoom.belongsTo(Notice, { foreignKey: "noticeId" });
-
     ChatRoom.hasMany(ChatMessage, { foreignKey: "roomId" });
     ChatMessage.belongsTo(ChatRoom, { foreignKey: "roomId" });
 
@@ -36,7 +33,7 @@ const initModels = async () => {
 
     await sequelize.sync({ alter: true });
 
-    console.log("All models were synchronized successfully.");
+    console.log("✅ All models were synchronized successfully.");
 
     return { sequelize, User, Notice, ChatRoom, ChatMessage, ChatRead };
   } catch (error) {
