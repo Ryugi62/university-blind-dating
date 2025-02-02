@@ -6,7 +6,7 @@ import ChatRoomModel from "./ChatRoom.js";
 import ChatMessageModel from "./ChatMessage.js";
 import ChatReadModel from "./ChatRead.js";
 
-const initModels = async () => {
+export const initModels = async () => {
   try {
     const sequelize = await initializeSequelize();
 
@@ -41,5 +41,3 @@ const initModels = async () => {
     throw error;
   }
 };
-
-export default initModels;

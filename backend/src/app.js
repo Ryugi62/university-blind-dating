@@ -1,27 +1,27 @@
 import "./config/loadEnv.js";
-
 import "./models/index.js";
-import initModels from "./models/index.js";
-initModels();
 
 import express, { json } from "express";
 import cors from "cors";
 import cookieParser from "cookie-parser";
-
-import userRoutes from "./routes/userRoutes.js";
+import path from "path";
+import { fileURLToPath } from "url";
 
 const app = express();
 app.use(cors());
 app.use(json());
 app.use(cookieParser());
 
-import errorHandler from "./middlewares/errorHandler.js";
-app.use(errorHandler);
+import userRoutes from "./routes/userRoutes.js";
+app.use("/api/users", userRoutes);
 
-app.use("/users", userRoutes);
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 
-app.get("/", (_req, res) => {
-  res.send(`Backend is running in ${process.env.NODE_ENV} mode`);
+app.use(express.static(path.join(__dirname, "build")));
+
+app.get("*", (req, res) => {
+  res.sendFile(path.join(__dirname, "build", "index.html"));
 });
 
 const SERVER_PORT = process.env.SERVER_PORT || 5000;
