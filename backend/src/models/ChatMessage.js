@@ -12,20 +12,10 @@ export default (sequelize) => {
       roomId: {
         type: DataTypes.INTEGER,
         allowNull: false,
-        references: {
-          model: "chat_rooms",
-          key: "id",
-        },
-        onDelete: "CASCADE",
       },
       senderId: {
         type: DataTypes.INTEGER,
         allowNull: false,
-        references: {
-          model: "users",
-          key: "id",
-        },
-        onDelete: "CASCADE",
       },
       message: {
         type: DataTypes.TEXT,

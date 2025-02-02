@@ -9,15 +9,6 @@ export default (sequelize) => {
         autoIncrement: true,
         primaryKey: true,
       },
-      noticeId: {
-        type: DataTypes.INTEGER,
-        allowNull: false,
-        references: {
-          model: "notices",
-          key: "id",
-        },
-        onDelete: "CASCADE",
-      },
       createdAt: {
         type: DataTypes.DATE,
         allowNull: false,
