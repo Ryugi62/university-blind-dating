@@ -7,12 +7,12 @@ import Profile from "@/pages/Profile/Profile";
 const App = () => {
     return (
         <Router>
-                <Routes class="header">
-                    <Route path="/" element={<Home />} />
-                    <Route path="/notices" element={<Notices />} />
-                    <Route path="/chatrooms" element={<ChatRooms />} />
-                    <Route path="/profile" element={<Profile />} />
-                </Routes>
+            <Routes>
+                <Route path="/" element={<Home />} />
+                <Route path="/notices" element={<Notices />} />
+                <Route path="/chatrooms" element={<ChatRooms />} />
+                <Route path="/profile" element={<Profile />} />
+            </Routes>
         </Router>
     );
 };
