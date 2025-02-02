@@ -1,15 +1,26 @@
-require("./config/loadEnv"); // 환경 변수 로드
+import "./config/loadEnv.js";
 
-const express = require("express");
-const cors = require("cors");
-const cookieParser = require("cookie-parser");
+import "./models/index.js";
+import initModels from "./models/index.js";
+initModels();
+
+import express, { json } from "express";
+import cors from "cors";
+import cookieParser from "cookie-parser";
+
+import userRoutes from "./routes/userRoutes.js";
 
 const app = express();
 app.use(cors());
-app.use(express.json());
+app.use(json());
 app.use(cookieParser());
 
-app.get("/", (req, res) => {
+import errorHandler from "./middlewares/errorHandler.js";
+app.use(errorHandler);
+
+app.use("/users", userRoutes);
+
+app.get("/", (_req, res) => {
   res.send(`Backend is running in ${process.env.NODE_ENV} mode`);
 });
 
