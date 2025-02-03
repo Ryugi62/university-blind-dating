@@ -55,9 +55,6 @@ export const createChatRoom = async (req, res) => {
 
 export const getChatRooms = async (req, res) => {
   try {
-    // ✅ 채팅방 리스트 조회 로직
-    // ...
-
     return successResponse(res, "채팅방 조회 성공", chatRooms);
   } catch (error) {
     return errorResponse(res, 500, "채팅방 조회 실패", error.message);
