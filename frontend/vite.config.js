@@ -29,7 +29,7 @@ export default defineConfig(({ mode }) => {
     },
 
     build: {
-      outDir: path.resolve(__dirname, "../backend/src/build"),
+      outDir: path.resolve(__dirname, "../backend/src/dist"),
       emptyOutDir: true,
     },
   };
