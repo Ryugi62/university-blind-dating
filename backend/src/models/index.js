@@ -10,6 +10,8 @@ export const initModels = async () => {
   try {
     const sequelize = await initializeSequelize();
 
+    console.log("initModels");
+
     const User = UserModel(sequelize);
     const Notice = NoticeModel(sequelize);
     const ChatRoom = ChatRoomModel(sequelize);
@@ -41,3 +43,8 @@ export const initModels = async () => {
     throw error;
   }
 };
+
+// Automatically execute initModels when the module is imported
+initModels().catch((error) => {
+  console.error("Error initializing models:", error);
+});
