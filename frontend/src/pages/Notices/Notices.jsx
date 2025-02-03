@@ -7,18 +7,21 @@ const Notices = () => {
         const sexes = ["남성팀", "여성팀"];
 
         return Array.from({ length: count }, (_, i) => {
-            const randomDeptCount = Math.floor(Math.random() * 3) + 1;
+            const randomDeptCount = Math.floor(Math.random() * 3) + 2;
             const randomDepts = Array.from({ length: randomDeptCount }, () => departments[Math.floor(Math.random() * departments.length)]);
-            const randomYears = Array.from({ length: randomDeptCount }, () => Math.floor(Math.random() * 4) + 1);
-            const randomCount = Math.floor(Math.random() * 3) + 1;
+            const uniqueDepts = [...new Set(randomDepts)];
+            const randomYears = Array.from({ length: uniqueDepts.length }, () => Math.floor(Math.random() * 4) + 1);
             const randomSex = sexes[Math.floor(Math.random() * sexes.length)];
             const randomStatus = statuses[Math.floor(Math.random() * statuses.length)];
 
+            const title = `${uniqueDepts.join(" & ")} ${uniqueDepts.length}:${uniqueDepts.length} 과팅 구해요!`;
+
             return {
                 id: i + 1,
-                departments: randomDepts,
+                title,
+                departments: uniqueDepts,
                 years: randomYears,
-                count: randomCount,
+                count: uniqueDepts.length,
                 sex: randomSex,
                 status: randomStatus,
             };
@@ -28,58 +31,74 @@ const Notices = () => {
     const notices = generateDummyNotices(10);
 
     return (
-        <div className="min-h-screen bg-gray-100 text-gray-900 flex flex-col items-center justify-center p-6">
+        <div className="min-h-screen flex flex-col items-center p-6 bg-gray-50 text-gray-900">
             <h1 className="text-3xl sm:text-5xl font-bold mb-8 text-center">
                 📢 과팅 모집 현황
             </h1>
 
-            {/* 모집 공지 리스트 */}
-            <div className="w-full max-w-4xl grid grid-cols-1 sm:grid-cols-2 gap-6">
-                {notices.map((notice) => (
-                    <div 
-                        key={notice.id} 
-                        className="p-6 bg-white rounded-lg shadow-md flex flex-col justify-between min-h-56"
-                    >
-                        {/* 모집 상태 뱃지 */}
-                        <div className="flex justify-between items-center">
-                            <h2 className="text-lg font-bold text-blue-600">
-                                🏫 {notice.count}:{notice.count} 과팅 모집
-                            </h2>
-                            <span className={`px-4 py-1 text-sm font-semibold rounded-full ${notice.status === "모집중" ? "bg-green-500 text-white" : "bg-gray-400 text-gray-200"}`}>
-                                {notice.status}
-                            </span>
-                        </div>
+            {/* ✅ 카드 리스트 */}
+            <div className="w-full max-w-4xl flex-grow">
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 pb-24">
+                    {notices.map((notice) => (
+                        <NoticeCard key={notice.id} notice={notice} />
+                    ))}
+                </div>
+            </div>
 
-                        {/* 팀 정보 */}
-                        <div className="mt-3 bg-gray-100 p-3 rounded-lg space-y-2 flex-1">
-                            {notice.departments.map((dept, index) => (
-                                <p key={index} className="flex justify-between text-sm">
-                                    <span className="font-medium">{dept}</span>
-                                    <span className="text-gray-600">{notice.years[index]}학년</span>
-                                </p>
-                            ))}
-                        </div>
+            {/* ✅ 하단 고정 버튼 */}
+            <div className="fixed bottom-5 left-1/2 transform -translate-x-1/2 w-full max-w-md px-4">
+                <Link 
+                    to="/create-notice" 
+                    className="w-full bg-[#007AFF] text-white font-semibold py-3 px-8 rounded-full shadow-lg hover:bg-[#005BBB] transition-all duration-300 text-center block"
+                >
+                    새로운 공지 만들기 ✍️
+                </Link>
+            </div>
+        </div>
+    );
+};
 
-                        {/* 성별 & 참여 버튼 */}
-                        <div className="mt-4 flex justify-between items-center">
-                            <p className="text-gray-800 text-sm">
-                                🚻 성별: <span className="font-semibold">{notice.sex}</span>
-                            </p>
-                            <Link 
-                                to={`/notices/${notice.id}`} 
-                                className={`text-center ${notice.sex === "남성팀" ? "bg-blue-600 hover:bg-blue-700" : "bg-pink-500 hover:bg-pink-600"} text-white font-semibold py-2 px-3 rounded-lg text-sm transition-all`}
-                            >
-                                자세히 보기 👀
-                            </Link>
-                        </div>
-                    </div>
+const NoticeCard = ({ notice }) => {
+    const borderColor = notice.sex === "남성팀" ? "border-blue-500" : "border-pink-500";
+    const textColor = notice.sex === "남성팀" ? "text-blue-500" : "text-pink-500";
+    const buttonColor = notice.sex === "남성팀" ? "bg-blue-500 hover:bg-blue-600" : "bg-pink-500 hover:bg-pink-600";
+
+    return (
+        <div className={`p-6 lg:p-8 bg-white border-2 ${borderColor} rounded-3xl shadow-2xl flex flex-col justify-between min-h-56 transition-all hover:scale-[1.02]`}>
+            <div className="flex items-center space-x-2">
+                <span className={`text-lg font-semibold ${textColor}`}>{notice.sex === "남성팀" ? "👨‍💼" : "👩‍🎓"}</span>
+                <h2 className="text-xl sm:text-2xl font-semibold text-gray-900">{notice.title}</h2>
+            </div>
+
+            <div className="flex justify-between items-center mt-3">
+                <h3 className="text-lg font-semibold text-gray-700">
+                    🏫 {notice.count}:{notice.count} 과팅 구해요!
+                </h3>
+                <span className={`px-4 py-1 text-sm font-medium rounded-full ${notice.status === "모집중" ? "bg-green-500 text-white" : "bg-gray-400 text-gray-200"}`}>
+                    {notice.status}
+                </span>
+            </div>
+
+            <div className="mt-4 rounded-xl bg-gray-100 p-4 shadow-sm">
+                {notice.departments.map((dept, index) => (
+                    <p key={index} className="flex justify-between text-sm text-gray-800">
+                        <span className="font-medium">{dept}</span>
+                        <span className="text-gray-600">{notice.years[index]}학년</span>
+                    </p>
                 ))}
             </div>
 
-            {/* 새 모집 공지 생성 버튼 */}
-            <Link to="/create-notice" className="mt-8 bg-yellow-400 text-gray-900 font-semibold py-3 px-8 rounded-full shadow-lg hover:bg-yellow-500 transition-all">
-                새로운 모집 공지 만들기 ✍️
-            </Link>
+            <div className="mt-6 flex justify-between items-center">
+                <p className="text-gray-800 text-sm">
+                    🚻 성별: <span className={`font-semibold ${textColor}`}>{notice.sex}</span>
+                </p>
+                <Link 
+                    to={`/notices/${notice.id}`} 
+                    className={`text-center ${buttonColor} text-white font-semibold py-2 px-4 rounded-full text-sm transition-all duration-300`}
+                >
+                    자세히 보기 👀
+                </Link>
+            </div>
         </div>
     );
 };

@@ -22,7 +22,7 @@ const Home = () => {
                 <Link to="/notices" className="w-full sm:w-auto bg-white text-gray-900 font-medium py-3 px-4 sm:px-6 rounded-lg shadow-md transition-all hover:bg-gray-200">
                     📢 매칭 공지 보기
                 </Link>
-                <Link to="/chatrooms" className="w-full sm:w-auto bg-white text-gray-900 font-medium py-3 px-4 sm:px-6 rounded-lg shadow-md transition-all hover:bg-gray-200">
+                <Link to="/chatRoomList" className="w-full sm:w-auto bg-white text-gray-900 font-medium py-3 px-4 sm:px-6 rounded-lg shadow-md transition-all hover:bg-gray-200">
                     💬 채팅방
                 </Link>
                 <Link to="/profile" className="w-full sm:w-auto bg-white text-gray-900 font-medium py-3 px-4 sm:px-6 rounded-lg shadow-md transition-all hover:bg-gray-200">

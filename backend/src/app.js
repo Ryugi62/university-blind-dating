@@ -8,12 +8,23 @@ import path from "path";
 import { fileURLToPath } from "url";
 
 const app = express();
-app.use(cors());
+
+// ✅ CORS 설정 (withCredentials: true와 함께 사용 가능)
+app.use(
+  cors({
+    origin: "http://localhost:5173", // ✅ 프론트엔드 도메인 지정
+    credentials: true, // ✅ 쿠키/인증 정보를 포함하도록 설정
+  })
+);
+
 app.use(json());
 app.use(cookieParser());
 
 import userRoutes from "./routes/userRoutes.js";
+import chatRoomRoutes from "./routes/chatRoomRoutes.js"; // ✅ 채팅방 API 추가
+
 app.use("/api/users", userRoutes);
+app.use("/api/chatRoomList", chatRoomRoutes); // ✅ 채팅방 리스트 엔드포인트 추가
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
