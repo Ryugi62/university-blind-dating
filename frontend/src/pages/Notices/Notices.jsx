@@ -36,41 +36,42 @@ const Notices = () => {
             {/* 모집 공지 리스트 */}
             <div className="w-full max-w-4xl grid grid-cols-1 sm:grid-cols-2 gap-6">
                 {notices.map((notice) => (
-                    <div key={notice.id} className="p-6 bg-white rounded-lg shadow-md flex flex-col">
+                    <div 
+                        key={notice.id} 
+                        className="p-6 bg-white rounded-lg shadow-md flex flex-col justify-between min-h-56"
+                    >
                         {/* 모집 상태 뱃지 */}
-                        <span className={`self-end px-4 py-1 text-sm font-semibold rounded-full ${notice.status === "모집중" ? "bg-green-500 text-white" : "bg-gray-400 text-gray-200"}`}>
-                            {notice.status}
-                        </span>
-
-                        {/* 학과 & 학년 */}
-                        <div className="mt-4">
-                            <h2 className="text-lg font-bold text-blue-600 flex items-center gap-2">
-                                🏫 학과: 
-                                <span className="text-gray-800">{notice.departments.join(", ")}</span>
+                        <div className="flex justify-between items-center">
+                            <h2 className="text-lg font-bold text-blue-600">
+                                🏫 {notice.count}:{notice.count} 과팅 모집
                             </h2>
-                            <p className="text-gray-600 flex items-center gap-2">
-                                🎓 학년: 
-                                <span>{notice.years.map(year => `${year}학년`).join(", ")}</span>
-                            </p>
+                            <span className={`px-4 py-1 text-sm font-semibold rounded-full ${notice.status === "모집중" ? "bg-green-500 text-white" : "bg-gray-400 text-gray-200"}`}>
+                                {notice.status}
+                            </span>
                         </div>
 
-                        {/* 인원 & 성별 */}
-                        <div className="mt-3 flex justify-between items-center">
-                            <p className="text-gray-800 flex items-center gap-2">
-                                👥 인원: <span className="font-semibold">{notice.count}명</span>
-                            </p>
-                            <p className="text-gray-800 flex items-center gap-2">
+                        {/* 팀 정보 */}
+                        <div className="mt-3 bg-gray-100 p-3 rounded-lg space-y-2 flex-1">
+                            {notice.departments.map((dept, index) => (
+                                <p key={index} className="flex justify-between text-sm">
+                                    <span className="font-medium">{dept}</span>
+                                    <span className="text-gray-600">{notice.years[index]}학년</span>
+                                </p>
+                            ))}
+                        </div>
+
+                        {/* 성별 & 참여 버튼 */}
+                        <div className="mt-4 flex justify-between items-center">
+                            <p className="text-gray-800 text-sm">
                                 🚻 성별: <span className="font-semibold">{notice.sex}</span>
                             </p>
+                            <Link 
+                                to={`/notices/${notice.id}`} 
+                                className={`text-center ${notice.sex === "남성팀" ? "bg-blue-600 hover:bg-blue-700" : "bg-pink-500 hover:bg-pink-600"} text-white font-semibold py-2 px-3 rounded-lg text-sm transition-all`}
+                            >
+                                자세히 보기 👀
+                            </Link>
                         </div>
-
-                        {/* 참여하기 버튼 */}
-                        <Link 
-                            to={`/notices/${notice.id}`} 
-                            className={`mt-5 ${notice.sex === "남성팀" ? "bg-blue-600 hover:bg-blue-700" : "bg-pink-500 hover:bg-pink-600"} text-white font-semibold py-2 px-4 rounded-lg text-center transition-all`}
-                        >
-                            자세히 보기 👀
-                        </Link>
                     </div>
                 ))}
             </div>
