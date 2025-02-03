@@ -99,7 +99,7 @@ const Notices = () => {
       {showScrollToTop && (
         <button
           onClick={scrollToTop}
-          className="fixed bottom-20 right-5 bg-white text-gray-900 font-semibold py-3 px-4 rounded-full shadow-lg hover:bg-gray-100 transition-all duration-300 flex items-center justify-center border border-gray-300"
+          className="fixed bottom-20 right-5 bg-white text-gray-900 font-semibold py-3 px-4 rounded-full shadow-lg hover:bg-gray-100 flex items-center justify-center border border-gray-300"
         >
           <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -132,7 +132,7 @@ const NoticeCard = ({ notice }) => {
 
   return (
     <div
-      className={`p-6 lg:p-8 bg-white border-2 ${borderColor} rounded-3xl shadow-2xl flex flex-col justify-between min-h-56 transition-all hover:scale-[1.02] w-full`}
+      className={`p-6 lg:p-8 bg-white border-2 ${borderColor} rounded-3xl shadow-2xl flex flex-col justify-between min-h-56 w-full`}
     >
       <div className="flex items-center space-x-2">
         <h2 className="text-xl sm:text-2xl font-semibold text-gray-900">
@@ -169,7 +169,7 @@ const NoticeCard = ({ notice }) => {
       <div className="mt-6 flex justify-between items-center">
         <Link
           to={`/notices/${notice.id}`}
-          className={`text-center ${buttonColor} text-white font-semibold py-2 px-4 rounded-full text-sm transition-all duration-300 w-full`}
+          className={`text-center ${buttonColor} text-white font-semibold py-2 px-4 rounded-full text-sm w-full`}
         >
           자세히 보기 👀
         </Link>
