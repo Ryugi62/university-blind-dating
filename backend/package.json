@@ -5,8 +5,8 @@
   "type": "module",
   "scripts": {
     "dev": "cross-env NODE_ENV=development nodemon src/app.js",
-    "start": "cross-env NODE_ENV=production pm2 start src/app.js --name 'UNIVERSITY_BLIND_DATING'",
-    "stop": "pm2 stop UNIVERSITY_BLIND_DATING",
+    "start": "cross-env NODE_ENV=production sudo pm2 start src/app.js --name 'UNIVERSITY_BLIND_DATING'",
+    "stop": "sudo pm2 stop UNIVERSITY_BLIND_DATING",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],
